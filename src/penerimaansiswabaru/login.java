@@ -170,25 +170,31 @@ public class login extends javax.swing.JFrame {
         
         String query = "SELECT * FROM 'login' WHERE 'Username'=? AND 'Password'=?";
         
-        try{
+        try {
             ps = koneksi.getConnection().prepareStatement(query);
             
             ps.setString(1, username);
             ps.setString(2, password);
             
+            // mengeksekusi queri
             rs = ps.executeQuery();
             
-            if(rs.next());
+            // jika ada, maka akan berhasil login dan masuk ke halaman Main Activity
+            if(rs.next())
             {
-                //new namaFrame().setVisible(true);
-                //this.dispose();
+                    
+                    
+                    this.dispose();
             }
+            
+            // jika tidak berhasil / tidak terdaftar maka akan muncul dialog jika user belom terdaftar & salah
             else{
-                    JOptionPane.showMessageDialog(null,"Akun anda belum terdaftar","LOGIN GAGAL", 2);
-                    penghapus();
-            }
-        } catch (SQLException ex){
-            Logger.getLogger(login.class.getName()).log(Level.SEVERE,null, ex);
+                    JOptionPane.showMessageDialog(null, "Akun Belum Terdaftar / Nama Pengguna atau Kata Sandi Salah!", "Login Gagal!", 2);
+                    //penghapus();
+                }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

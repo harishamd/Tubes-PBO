@@ -5,6 +5,11 @@
  */
 package penerimaansiswabaru;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author LENOVO
@@ -213,6 +218,28 @@ public class ListDataPendaftaran extends javax.swing.JFrame {
                 new ListDataPendaftaran().setVisible(true);
             }
         });
+    }
+    
+    private void Tampiltable() throws SQLException{
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("NO");
+        model.addColumn("Nama");
+        model.addColumn("Asal Sekolah");
+        model.addColumn("Nilai");
+        
+        try {
+            int no=1;
+            String sql = "Select Nama_Lengkap,Asal_Sekolah,Nilai from frompendaftaran";
+            java.sql.Connection conn=(Connection)koneksi.getConnection();
+            java.sql.Statement stm=conn.createStatement();
+            java.sql.ResultSet res=stm.executeQuery(sql);
+            while(res.next()){
+                model.addRow(new Object[]{no++,res.getString(1),res.getString(2),res.getString(3)});
+            }
+            jTable1.setModel(model);
+            jTable1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        }catch (Exception e){
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
